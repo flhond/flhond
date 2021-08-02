@@ -31,7 +31,7 @@ After completing this Hack you will be able to:
    -  Configure all forward DNS from virtual networks to Azure Firewall.
 - Challenge 5: **[IDPS](Student/05-idps.md)**
    - Configure a network intrusion detection and prevention system (IDPS) that allows you to monitor network activities for malicious activity.
-- Challenge 6: **[TLS Inspection](Student/06-tls.md)**
+- Challenge 6: **[TLS Inspection](Student/06-tls-inspection.md)**
    - Configure the TLS inspection to decrypts/encrypts outbound data traffic.
 - Challenge 7: **[URL Filtering](Student/07-url-filtering.md)**
    - Configure the URL Filtering in the application rule .

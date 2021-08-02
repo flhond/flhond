@@ -27,11 +27,10 @@ az account list --output table
 az account set --subscription "My Subscription"
 ```
 
-- Setup the DNS Proxy trought Firewall Policy  **azfw-policy-std**
+- Setup the DNS Proxy trought Firewall Policy  **azfw-policy-std**, and using the Azure Cloud Shell
 
 ```bash
 az network firewall policy update --name azfw-policy-std -g wth-azurefirewall-rg --enable-dns-proxy --sku Premium
-az network firewall policy rule-collection-group collection add-filter-collection -g wth-azurefirewall-rg --policy-name azfw-policy-std --rule-collection-group-name DefaultApplicationRuleCollectionGroup --name rule-allow-default-sites --action Allow --rule-name allow-microsoft --rule-type ApplicationRule --source-addresses "10.20.1.4" --protocols Http=80 --target-fqdns www.microsoft.com --collection-priority 11200
 ```
 
 - Connect to **azbrazilsouthvm01 - 10.20.1.4** via Bastion, open the command prompt and run it:
@@ -50,7 +49,7 @@ You will change the DNS Server in the spoke virtual network and verify the DNS I
 az network vnet update -g wth-azurefirewall-rg  -n brazilsouth-spoke1-vnet --dns-servers 10.200.3.4
 ```
 
-- Connect to **azbrazilsouthvm01 - 10.20.1.4** via Bastion, open the command prompt and run it:
+- Connect again to **azbrazilsouthvm01 - 10.20.1.4** via Bastion, open the command prompt and run it:
 
 ```cmd
 ipconfig /release && ipconfig /renew

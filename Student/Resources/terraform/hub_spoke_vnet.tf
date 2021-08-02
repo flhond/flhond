@@ -755,6 +755,13 @@ resource "azurerm_route_table" "rt-brazilsouth-spoke1-vmsubnet" {
     next_hop_in_ip_address = "10.200.3.4" 
   }
 
+   route {
+    name           = "to-internet"
+    address_prefix = "0.0.0.0/0"
+    next_hop_type  = "VirtualAppliance"
+    next_hop_in_ip_address = "10.200.3.4" 
+  }
+
   tags = {
      environment = "wth"
      deployment  = "terraform"
@@ -907,11 +914,36 @@ resource "azurerm_firewall_policy" "base-firewall-Policy" {
   }
 }
 
+resource "azurerm_firewall_policy_rule_collection_group" "apprule-firewall-Policy" {
+  name               = "DefaultApplicationRuleCollectionGroup"
+  firewall_policy_id = azurerm_firewall_policy.base-firewall-Policy.id
+  priority           = 100
+  application_rule_collection {
+    name     = "app_rule_brazil_default_sites"
+    priority = 100
+    action   = "Allow"
+    rule {
+      name = "allow_brazil_default_sites"
+      protocols {
+        type = "Http"
+        port = 80
+      }
+      protocols {
+        type = "Https"
+        port = 443
+      }
+      source_addresses  = ["10.20.1.0/24", "10.20.2.0/24"]
+      destination_fqdns = ["www.microsoft.com", "azure.archive.ubuntu.com", "kms.core.windows.net"]
+    }
+  }
+}
+
 resource "azurerm_ip_group" "br-icmp-ipgroup" {
   name                = "icmp-ipgroup"
   location            = "brazilsouth"
   resource_group_name = azurerm_resource_group.firewall-microhack-rg.name
 
+  cidrs = ["192.168.0.4", "10.10.1.4"]
   tags = {
      environment = "wth"
      deployment  = "terraform"
