@@ -90,9 +90,9 @@ AzureDiagnostics
 
 ## Success Criteria
 
-1. You detect the port scan trought the Azure Log Analitycs.
+1. You detect the port scan through the Azure Log Analitycs.
 2. You have updated the IDPS policy.
-3. You blocked the network malicious attack .
+3. You blocked the network malicious attack.
 
 
 ## Learning Resources

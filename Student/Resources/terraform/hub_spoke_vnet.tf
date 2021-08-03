@@ -915,15 +915,15 @@ resource "azurerm_firewall_policy" "base-firewall-Policy" {
 }
 
 resource "azurerm_firewall_policy_rule_collection_group" "apprule-firewall-Policy" {
-  name               = "DefaultApplicationRuleCollectionGroup"
+  name               = "apprule_collection_group"
   firewall_policy_id = azurerm_firewall_policy.base-firewall-Policy.id
   priority           = 100
   application_rule_collection {
-    name     = "app_rule_brazil_default_sites"
+    name     = "app_rule_brazil_default_websites"
     priority = 100
     action   = "Allow"
     rule {
-      name = "allow_brazil_default_sites"
+      name = "allow_brazil_default_websites"
       protocols {
         type = "Http"
         port = 80

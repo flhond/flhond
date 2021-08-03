@@ -90,4 +90,5 @@ AzureDiagnostics
 ## Learning Resources
 
 - [Azure Firewall DNS settings](https://docs.microsoft.com/en-us/azure/firewall/dns-settings)</br>
+- [Name resolution for resources in Azure virtual networks](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-name-resolution-for-vms-and-role-instances)
 

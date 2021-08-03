@@ -11,7 +11,7 @@ In this challenge, you will set up the network intrusion detection and preventio
 
 The network intrusion detection and prevention system (IDPS) provides rapid detection of attack based on signature. You will set up, monitor and block malicious attack through the Azure Firewall and Log Analytics workspace.
 
-#### Task 1 - Set up the IDPS to alert netowrk malicious attack
+#### Task 1 - Enabling the IDPS to alert network malicious attack
 
 To start the setup, follow the steps listed below:
 
@@ -28,7 +28,7 @@ az account list --output table
 az account set --subscription "My Subscription"
 ```
 
-- Setup the IDPS trought Firewall Policy  **azfw-policy-std**
+ Enable the IDPS thought to Firewall Policy  **azfw-policy-std**, and use the Azure Cloud Shell to start the setup.
 
 ```bash
 az network firewall policy update --name azfw-policy-std -g wth-azurefirewall-rg --idps-mode Alert --sku Premium
