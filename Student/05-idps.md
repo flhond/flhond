@@ -6,6 +6,7 @@
 
 In this challenge, you will set up the network intrusion detection and prevention system (IDPS) to monitor the malicious activity in your virtual network.
 
+![Intra-region Forwarding Architecture](images/idps.png)
 
 ## Description
 
