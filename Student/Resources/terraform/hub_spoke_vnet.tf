@@ -938,6 +938,12 @@ resource "azurerm_firewall_policy_rule_collection_group" "apprule-firewall-Polic
   }
 }
 
+resource "azurerm_firewall_policy_rule_collection_group" "netrule-firewall-Policy" {
+  name               = "netrule_collection_group"
+  firewall_policy_id = azurerm_firewall_policy.base-firewall-Policy.id
+  priority           = 400
+
+}
 resource "azurerm_ip_group" "br-icmp-ipgroup" {
   name                = "icmp-ipgroup"
   location            = "brazilsouth"
@@ -953,8 +959,14 @@ resource "azurerm_ip_group" "br-icmp-ipgroup" {
 }
 
 #######################################################################
-## Azure Key Vault
+## Azure Key Vault and Managed Identity 
 #######################################################################
+
+resource "azurerm_user_assigned_identity" "miazfw" {
+  resource_group_name = azurerm_resource_group.firewall-microhack-rg.name
+  location            = "brazilsouth"
+  name                = "miazfw"
+}
 
 data "azurerm_client_config" "current" {}
 
@@ -1004,3 +1016,16 @@ resource "azurerm_key_vault" "brazilsouth-keyvault" {
   }
 }
 
+resource "azurerm_key_vault_access_policy" "keyVault-policy" {
+  key_vault_id = azurerm_key_vault.brazilsouth-keyvault.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = azurerm_user_assigned_identity.miazfw.principal_id
+
+  certificate_permissions = [
+    "Get","List",
+  ]
+
+  secret_permissions = [
+    "Get","List",
+  ]
+}

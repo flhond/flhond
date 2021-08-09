@@ -43,6 +43,8 @@ nmap -sV 10.20.1.4
 
 ![Azure Log Analytics](images/nmap.PNG)
 
+:question:Any alert?
+
 Wait to complete the command with the destination information. Look at the Firewall logs and verify if it triggers an alert in the Azure Log Analytics. You can use the following You can use the below Kusto Query:
 
 ```bash
@@ -55,8 +57,6 @@ AzureDiagnostics
 ```
 
 ![Azure Log Analytics](images/scan-nmap.PNG)
-
-:question:Any alert?
 
 #### Task 2 - Deny the network malicious attack
 
