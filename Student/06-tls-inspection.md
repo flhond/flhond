@@ -37,9 +37,39 @@ az keyvault certificate import --vault-name "aznetsecvault" --file "interCA.pfx"
 
 ![Azure Log Analytics](images/tls-inspec.png)
 
-#### Task 2 - Deny the network malicious attack
 
-Now you will block any tentative by network attack inside the virtual network.
+- Create an application rules trought Firewall Policy  **azfw-policy-std**.
+
+```bash
+az network firewall policy rule-collection-group collection add-filter-collection -g wth-azurefirewall-rg --policy-name azfw-policy-std --rule-collection-group-name DefaultApplicationRuleCollectionGroup --name rule-allow-site-threat-intell --action Allow --rule-name allow-site-threat-intell --rule-type ApplicationRule --source-addresses "10.20.1.4" --protocols Http=80 --target-fqdns testmaliciousdomain.eastus.cloudapp.azure.com --collection-priority 11100
+```
+
+- Connect to **azbrsouthvm01 - 10.20.1.4** via Bastion, open the powershell, and import the public certificate using the below command line.
+
+```powershell
+New-Item -Name azfw-tlsinspec -ItemType Directory
+cd ./azfw-tlsinspec
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/adicout/azurefirewall-microhack/main/Student/Resources/certificates/rootCA.crt -OutFile rootCA.crt
+Import-Certificate -FilePath .\rootCA.crt -CertStoreLocation Cert:\LocalMachine\Root\
+```
+
+- Verify if imported certificate.
+
+```powershell
+Get-ChildItem -Path Cert:\LocalMachine\Root
+```
+
+![Import Certificate](images/import-cert.png)
+
+#### Task 2 - Validate TLS Inspection
+
+You will access the URL  any tentative by network attack inside the virtual network.
+
+- Create an application rules trought Firewall Policy  **azfw-policy-std**.
+
+```bash
+az network firewall policy rule-collection-group collection add-filter-collection -g wth-azurefirewall-rg --policy-name azfw-policy-std --rule-collection-group-name DefaultApplicationRuleCollectionGroup --name rule-allow-site-threat-intell --action Allow --rule-name allow-site-threat-intell --rule-type ApplicationRule --source-addresses "10.20.1.4" --protocols Http=80 --target-fqdns testmaliciousdomain.eastus.cloudapp.azure.com --collection-priority 11100
+```
 
 - Follow the steps 1 and 2 of **Task 1** and run the below command on Azure Cloud Shell.
 
